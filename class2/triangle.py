@@ -1,17 +1,19 @@
 import sys
 
-lst=[]
-
 while True:
-    tmp=input().split(" ")
-    lst.append(tmp)
+    lst=[]
+    a,b,c=map(int,input().split())
     
-    if lst[len(lst)-1][0] == "0" and lst[len(lst)-1][1] == "0" and lst[len(lst)-1][2] == "0":
+    if a==0 and b==0 and c==0:
         break
+    
+    lst.append(a)
+    lst.append(b)
+    lst.append(c)
+    
+    lst.sort()
+    
+    if pow(lst[2],2)==pow(lst[0],2)+pow(lst[1],2):
+        print("right")
     else:
-
-for i in range(len(lst)):
-    max(lst[i][0],lst[i][1],lst[i][2])
-    
-
-    
+        print("wrong")
