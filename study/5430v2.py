@@ -1,52 +1,39 @@
+import sys
 from collections import deque
 
-ir=[]
-buf=deque()
-check_buf_len=deque()
-result=[]
+input=sys.stdin.readline
 
 test_case=int(input())
 for i in range(test_case):
-    ir.append(input())
-    check_buf_len.append(int(input()))
-    
-    tmp=input().replace('[',"").replace("]","")
-    if len(tmp)==0:
-        buf.append(deque(""))
-    else:
-        buf.append(deque(list(map(int,tmp.split(",")))))
-    
-for lst in range(len(buf)):
-    ir_tmp=ir[lst]
-    buf_tmp=buf.popleft()
-    err_flag=False
+    ir=input()
+    check_buf_len=int(input())
+    queue=deque(input().rstrip()[1:-1].split(","))
     reverse_flag=False
     
-    if check_buf_len[lst]!=len(buf_tmp):
-        err_flag=True
+    if check_buf_len==0:
+        queue=[]
     
-    for i in range(len(ir_tmp)):
-        if ir_tmp[i]=="R":
-            reverse_flag=reverse_flag^True
-            
-        if ir_tmp[i]=="D" and len(buf_tmp)!=0:
-            
-            if reverse_flag:
-                buf_tmp.pop()
-            else:
-                buf_tmp.popleft()
-                
-        elif ir_tmp[i]=="D" and len(buf_tmp)==0:
-            err_flag=True
-            break
-    
-    if reverse_flag:
-        buf_tmp.reverse()
+    for ir in ir:
         
-    if err_flag:
-        result.append("error")
+        
+        if ir=="R":
+            reverse_flag=reverse_flag^True
+                
+        elif ir=="D":
+                
+            if len(queue)==0:
+                print("error")
+                break
+            else:
+                    
+                if reverse_flag:
+                    queue.pop()
+                else:
+                    queue.popleft()
+
     else:
-        result.append(list(buf_tmp))
-    
-    print(result[lst])
-    
+        if reverse_flag==True:
+            queue.reverse()
+            print("["+",".join(queue)+"]")
+        else:
+            print("["+",".join(queue)+"]")
